@@ -339,7 +339,7 @@ public class ProfileFragment extends Fragment {
         *
         * Here! image is the key in each user containing uri of user's profile picture
         *
-        * cover is the key in each user containing uri of userr's cover photo
+        * cover is the key in each user containing uri of user's cover photo
         * */
     }
 
