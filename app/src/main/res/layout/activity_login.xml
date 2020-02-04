@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/register" />
+
+    <!--    input email -->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- input password-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailTextInputLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:passwordToggleEnabled="true">
+
+        <EditText
+            android:id="@+id/passwordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--    button register-->
+    <Button
+        android:id="@+id/loginButtonSign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordTextInputLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/register_button_style"
+        android:letterSpacing="0.4"
+        android:text="Login"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:typeface="serif" />
+
+    <!--    TextView show dialog to recover password-->
+    <TextView
+        android:id="@+id/recoverPasswordText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginButtonSign"
+        android:text="Forget Password? Recover"
+        android:textAlignment="center"
+        android:textColor="#474141"
+        android:textSize="15dp" />
+
+    <!--    Google sign in button with google account-->
+<!--    <com.google.android.gms.common.SignInButton-->
+<!--        android:id="@+id/googleLoginButton"-->
+<!--        android:layout_marginTop="5px"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/recoverPasswordText"-->
+<!--        android:layout_centerHorizontal="true" />-->
+
+    <com.shobhitpuri.custombuttons.GoogleSignInButton
+        android:id="@+id/googleLoginButton"
+        android:layout_marginTop="5px"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/recoverPasswordText"
+        android:text="@string/google_sign_up"
+        android:letterSpacing="0.2"
+        android:typeface="serif"
+        app:isDarkTheme="true" />
+    <!--    Text View: click go to Register Activity-->
+    <TextView
+        android:id="@+id/notHaveAccountText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20px"
+        android:text="Not have account? Register"
+        android:textAlignment="center"
+        android:textColor="#2C2A2A"
+        android:textSize="15dp" />
+
+</RelativeLayout>
