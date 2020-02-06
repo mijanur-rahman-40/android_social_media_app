@@ -12,4 +12,8 @@
         android:id="@+id/nav_users"
         android:icon="@drawable/ic_action_users"
         android:title="Users" />
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/ic_chat_black"
+        android:title="Chats" />
 </menu>

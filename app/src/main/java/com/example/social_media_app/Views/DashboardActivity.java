@@ -1,4 +1,4 @@
-package com.example.social_media_app;
+package com.example.social_media_app.Views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,10 +7,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
+import com.example.social_media_app.ViewsModel.BottomMenuFragments.HomeFragment;
+import com.example.social_media_app.ViewsModel.BottomMenuFragments.ProfileFragment;
+import com.example.social_media_app.R;
+import com.example.social_media_app.ViewsModel.BottomMenuFragments.UsersFragment;
+import com.example.social_media_app.ViewsModel.ChatFragments.ChatListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -81,6 +84,15 @@ public class DashboardActivity extends AppCompatActivity {
                     fragmentTransaction_3.commit();
                     return true;
 
+                case R.id.nav_chat:
+                    // users fragment transaction
+                    actionBar.setTitle("Chats"); // change action bar title
+                    ChatListFragment chatListFragment = new ChatListFragment();
+                    FragmentTransaction fragmentTransaction_4 = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction_4.replace(R.id.content, chatListFragment, "");
+                    fragmentTransaction_4.commit();
+                    return true;
+
             }
             return false;
         }
@@ -113,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    // inflate option menu
+   /* // inflate option menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate menu_main
@@ -132,5 +144,5 @@ public class DashboardActivity extends AppCompatActivity {
             checkUserStatus();
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

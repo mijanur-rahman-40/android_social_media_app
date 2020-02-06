@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".DashboardActivity">
+    tools:context=".Views.DashboardActivity">
 
     <!--    show email of logged in user-->
     <!--    <TextView-->

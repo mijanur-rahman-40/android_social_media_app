@@ -1,4 +1,4 @@
-package com.example.social_media_app;
+package com.example.social_media_app.Views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.social_media_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -132,10 +133,10 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
 
                             // path to store user data named "Users"
-                            DatabaseReference reference = database.getReference("Users");
+                            DatabaseReference databaseReference = database.getReference("Users");
 
                             // put data within hash map in database
-                            reference.child(uid).setValue(hashMap);
+                            databaseReference.child(uid).setValue(hashMap);
 
                             Toast.makeText(RegisterActivity.this, "Registered...\n" + user.getEmail(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));

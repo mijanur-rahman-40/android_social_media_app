@@ -1,4 +1,4 @@
-package com.example.social_media_app;
+package com.example.social_media_app.Views;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.social_media_app.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -43,6 +44,7 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "";
     private static final int RC_SIGN_IN = 100;
     GoogleSignInClient googleSignInClient;
 
@@ -51,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     Button loginButton;
     // GoogleSignIn googleSignIn;
     GoogleSignInButton googleSignInButton;
-
-    private static final String TAG = "";
 
     // Declare an instance of Firebase Auth
     private FirebaseAuth firebaseAuth;
@@ -321,8 +321,8 @@ public class LoginActivity extends AppCompatActivity {
                                 // firebase database instance
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                                // path to store user data named "Users"
-                                DatabaseReference reference = database.getReference("Users");
+                                // path to store user data named "AdapterUsers"
+                                DatabaseReference reference = database.getReference("AdapterUsers");
 
                                 // put data within hash map in database
                                 reference.child(uid).setValue(hashMap);
