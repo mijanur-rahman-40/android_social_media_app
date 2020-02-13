@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.social_media_app.R;
+import com.example.social_media_app.Views.AddPostActivity;
 import com.example.social_media_app.Views.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -414,7 +415,7 @@ public class ProfileFragment extends Fragment {
                 // picking from gallery,first check if storage permission allowed or not
                 if (grantResults.length > 0) {
 
-                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     if (writeStorageAccepted) {
                         // permission enabled
                         pickFromGallery();
@@ -591,6 +592,8 @@ public class ProfileFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater menuInflater) {
         // inflate menu_main
         menuInflater.inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.actionSearch).setVisible(false);
+        menu.findItem(R.id.actionAddPost).setVisible(false);
         super.onCreateOptionsMenu(menu,menuInflater);
     }
 
@@ -602,6 +605,9 @@ public class ProfileFragment extends Fragment {
         if (id == R.id.actionLogout) {
             firebaseAuth.signOut();
             checkUserStatus();
+        }
+        if (id == R.id.actionAddPost) {
+            startActivity(new Intent(getActivity(), AddPostActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

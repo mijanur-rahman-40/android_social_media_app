@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.social_media_app.Notifications.Token;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.HomeFragment;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.ProfileFragment;
 import com.example.social_media_app.R;
@@ -17,6 +19,9 @@ import com.example.social_media_app.ViewsModel.ChatFragments.ChatListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -24,6 +29,8 @@ public class DashboardActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     ActionBar actionBar;
+
+    String myUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,24 @@ public class DashboardActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.content, homeFragment, "");
         fragmentTransaction.commit();
 
+        checkUserStatus();
+
+        // update token
+//        updateToken(FirebaseInstanceId.getInstance().getToken());
+
     }
+
+    @Override
+    protected void onResume() {
+        checkUserStatus();
+        super.onResume();
+    }
+
+    /*public void updateToken(String token) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token myToken = new Token(token);
+        databaseReference.child(myUID).setValue(myToken);
+    }*/
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -105,6 +129,13 @@ public class DashboardActivity extends AppCompatActivity {
             // user is signed in stay here
             // set email of logged in user
             // emailText.setText(user.getEmail());
+            myUID = user.getUid();
+
+            // save uid of current signed in user in shared preferences
+            /*SharedPreferences sharedPreferences = getSharedPreferences("SP_USER", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("Current_USERID", myUID);
+            editor.apply();*/
         } else {
             // user not sign in, go to main activity
             startActivity(new Intent(DashboardActivity.this, MainActivity.class));

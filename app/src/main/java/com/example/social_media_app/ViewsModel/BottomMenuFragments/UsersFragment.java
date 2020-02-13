@@ -138,15 +138,15 @@ public class UsersFragment extends Fragment {
                     ModelUser modelUser = ds.getValue(ModelUser.class);
 
                     /* Conditions to full fill search :
-                    * 1)User not current user
-                    * 2) The user name or email contains text entered in SearchView (case insensitive)
-                    * */
+                     * 1)User not current user
+                     * 2) The user name or email contains text entered in SearchView (case insensitive)
+                     * */
 
                     // get all search users except currently signed in user
                     assert modelUser != null;
                     assert user != null;
                     if (!modelUser.getUid().equals(user.getUid())) {
-                        if (modelUser.getName().toLowerCase().contains(query.toLowerCase()) || modelUser.getEmail().toLowerCase().contains(query.toLowerCase())){
+                        if (modelUser.getName().toLowerCase().contains(query.toLowerCase()) || modelUser.getEmail().toLowerCase().contains(query.toLowerCase())) {
                             userList.add(modelUser);
                         }
                     }
@@ -195,6 +195,9 @@ public class UsersFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater menuInflater) {
         // inflate menu_main
         menuInflater.inflate(R.menu.menu_main, menu);
+
+        // hide add post icon from this fragment
+        menu.findItem(R.id.actionAddPost).setVisible(false);
 
         // SearchView
         MenuItem item = menu.findItem(R.id.actionSearch);

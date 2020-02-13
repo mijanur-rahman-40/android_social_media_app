@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.AddPostActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--  EditText: input post title  -->
+        <EditText
+            android:id="@+id/postTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/editextstyle"
+            android:hint="Enter title"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <!--  ImageView : Input post image  -->
+        <ImageView
+            android:id="@+id/postImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:minHeight="200dp" />
+
+        <EditText
+            android:id="@+id/postDescriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/editextstyle"
+            android:gravity="start"
+            android:hint="Enter description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="120dp"
+            android:padding="10dp" />
+        <!--  EditText: Input post description -->
+
+        <!-- Button: Publish post to firebase   -->
+        <Button
+            android:id="@+id/postUploadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/register_button_style"
+            android:letterSpacing="0.4"
+            android:text="UPLOAD"
+            android:textColor="#fff"
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"
+            android:typeface="serif" />
+    </LinearLayout>
+
+</ScrollView>

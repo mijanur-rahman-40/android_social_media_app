@@ -47,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //  Action and its title
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle("Create Account");
 
         //  enable back button
@@ -125,6 +126,8 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("email", email);
                             hashMap.put("uid", uid);
                             hashMap.put("name", "");  // will add later
+                            hashMap.put("onlineStatus", "online");  // will add later
+                            hashMap.put("typingTo", "noOne");  // will add later
                             hashMap.put("phone", ""); // will add later
                             hashMap.put("image", ""); // will add later
                             hashMap.put("cover", ""); // will add later

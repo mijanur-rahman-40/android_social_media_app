@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.social_media_app.R;
+import com.example.social_media_app.Views.AddPostActivity;
 import com.example.social_media_app.Views.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -80,6 +81,9 @@ public class HomeFragment extends Fragment {
         if (id == R.id.actionLogout) {
             firebaseAuth.signOut();
             checkUserStatus();
+        }
+        if (id == R.id.actionAddPost) {
+           startActivity(new Intent(getActivity(), AddPostActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

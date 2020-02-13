@@ -39,10 +39,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.2.2'
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 
     // circular image library
     // implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.mohammadatif:CircularImageView:1.0.0'
+
+    // retrofit library
+    /*implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'*/
 
     // google sign in
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
