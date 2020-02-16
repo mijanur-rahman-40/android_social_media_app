@@ -162,7 +162,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     /*
                      * if you want to allow sender to delete only his message then
-                     * compare sender value with current user's id
+                     * compare sender value with current user'AdapterPosts id
                      * if they match means its the message of sender that is trying to delete
                      */
                     if (Objects.equals(ds.child("sender").getValue(), myUID)) {

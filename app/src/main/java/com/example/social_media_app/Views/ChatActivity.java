@@ -103,7 +103,7 @@ public class ChatActivity extends AppCompatActivity {
         // apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
 
-        /* On clicking user from users list we have passed that user's UID using intent
+        /* On clicking user from users list we have passed that user'AdapterPosts UID using intent
          * So get that uid here to get the profile picture,name and start char with that user
          * */
         Intent intent = getIntent();
@@ -115,7 +115,7 @@ public class ChatActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         usersDatabaseReference = firebaseDatabase.getReference("Users");
 
-        // search user to get that user's info
+        // search user to get that user'AdapterPosts info
         Query userQuery = usersDatabaseReference.orderByChild("uid").equalTo(hisUID);
 
         // get user picture and name
@@ -279,6 +279,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(final String message) {
+
         /* "Chats node will be created that will contain all chats"
          * Whenever user sends message it will create new child in "Chats" node and that child will contain
          * the following key values
@@ -366,7 +367,7 @@ public class ChatActivity extends AppCompatActivity {
             // user is signed in stay here
             // set email of logged in user
             // emailText.setText(user.getEmail());
-            myUID = user.getUid(); // currently signed in user's uid
+            myUID = user.getUid(); // currently signed in user'AdapterPosts uid
         } else {
             // user not sign in, go to main activity
             startActivity(new Intent(this, MainActivity.class));
@@ -420,8 +421,9 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        // hide search view, as we do not need here
+        // hide search view, add post, as we do not need here
         menu.findItem(R.id.actionSearch).setVisible(false);
+        menu.findItem(R.id.actionAddPost).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

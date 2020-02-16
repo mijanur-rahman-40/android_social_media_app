@@ -228,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
                             // dismiss progress dialog
                             progressDialog.dismiss();
 
-                            // Sign in success, update UI with the signed-in user's information
+                            // Sign in success, update UI with the signed-in user'AdapterPosts information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
@@ -294,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Sign in success, update UI with the signed-in user'AdapterPosts information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 

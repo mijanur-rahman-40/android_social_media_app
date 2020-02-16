@@ -16,8 +16,8 @@
         <!--      Receiver profile picture -->
         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
             android:id="@+id/profileImageView"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_default_profile"
             app:c_background_color="@color/colorPrimaryDark" />
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="online"
-                android:textColor="#ffffff"
+                android:textColor="#F7F2F2"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>

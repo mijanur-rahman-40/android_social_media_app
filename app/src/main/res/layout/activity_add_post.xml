@@ -50,7 +50,7 @@
             android:letterSpacing="0.4"
             android:text="UPLOAD"
             android:textColor="#fff"
-            android:layout_marginTop="15dp"
+            android:layout_margin="15dp"
             android:textSize="20dp"
             android:typeface="serif" />
     </LinearLayout>

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F1EDED"
-    tools:context=".ViewsModel.BottomMenuFragments.ProfileFragment">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    tools:context=".Views.ThereProfileActivity">
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -88,18 +87,5 @@
 
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
-    </ScrollView>
-    <!--Floating action button-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_action_edit_icon" />
-
-
-</RelativeLayout>
+</ScrollView>

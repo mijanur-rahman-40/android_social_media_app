@@ -10,18 +10,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.social_media_app.Notifications.Token;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.HomeFragment;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.ProfileFragment;
 import com.example.social_media_app.R;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.UsersFragment;
-import com.example.social_media_app.ViewsModel.ChatFragments.ChatListFragment;
+import com.example.social_media_app.ViewsModel.BottomMenuFragments.ChatListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -57,9 +53,6 @@ public class DashboardActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
         checkUserStatus();
-
-        // update token
-//        updateToken(FirebaseInstanceId.getInstance().getToken());
 
     }
 
@@ -132,10 +125,14 @@ public class DashboardActivity extends AppCompatActivity {
             myUID = user.getUid();
 
             // save uid of current signed in user in shared preferences
-            /*SharedPreferences sharedPreferences = getSharedPreferences("SP_USER", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("SP_USER", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("Current_USERID", myUID);
-            editor.apply();*/
+            editor.apply();
+
+            // update token
+            // updateToken(FirebaseInstanceId.getInstance().getToken());
+
         } else {
             // user not sign in, go to main activity
             startActivity(new Intent(DashboardActivity.this, MainActivity.class));
