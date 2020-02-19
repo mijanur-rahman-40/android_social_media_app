@@ -2,13 +2,13 @@ package com.example.social_media_app.Models;
 
 public class ModelPost {
     // same name as uploading post
-    String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes;
+    String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes, postComments;
 
     public ModelPost() {
 
     }
 
-    public ModelPost(String uid, String userName, String userEmail, String userProfile, String postId, String postTitle, String postDescription, String postImage, String postTime, String postLikes) {
+    public ModelPost(String uid, String userName, String userEmail, String userProfile, String postId, String postTitle, String postDescription, String postImage, String postTime, String postLikes, String postComments) {
         this.uid = uid;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -19,6 +19,7 @@ public class ModelPost {
         this.postImage = postImage;
         this.postTime = postTime;
         this.postLikes = postLikes;
+        this.postComments = postComments;
     }
 
     public String getUid() {
@@ -99,5 +100,13 @@ public class ModelPost {
 
     public void setPostLikes(String postLikes) {
         this.postLikes = postLikes;
+    }
+
+    public String getPostComments() {
+        return postComments;
+    }
+
+    public void setPostComments(String postComments) {
+        this.postComments = postComments;
     }
 }

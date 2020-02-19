@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#FAF6F6"
+    app:contentPadding="2dp">
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:id="@+id/commentAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_default_image" />
+
+        <TextView
+            android:id="@+id/commentUserNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/commentAvatar"
+            android:text="Apple"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/commentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/commentUserNameTextView"
+            android:layout_toEndOf="@id/commentAvatar"
+            android:layout_toRightOf="@id/commentAvatar"
+            android:text="This is actual comment"
+            android:textColor="#141414" />
+
+        <TextView
+            android:textColor="#644B4B"
+            android:id="@+id/postCommentTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/commentTextView"
+            android:layout_toEndOf="@id/commentAvatar"
+            android:layout_toRightOf="@id/commentAvatar"
+            android:text="12/06/2019" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

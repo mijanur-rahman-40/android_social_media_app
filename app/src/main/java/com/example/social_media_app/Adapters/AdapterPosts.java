@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.social_media_app.Models.ModelPost;
 import com.example.social_media_app.R;
 import com.example.social_media_app.Views.AddPostActivity;
+import com.example.social_media_app.Views.PostDetailActivity;
 import com.example.social_media_app.Views.ThereProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,7 +76,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     public void onBindViewHolder(@NonNull final MyHolder myHolder, final int position) {
 
         // get data
-        final String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes;
+        final String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes,postComments;
 
         uid = postList.get(position).getUid();
         userName = postList.get(position).getUserName();
@@ -87,6 +88,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         postImage = postList.get(position).getPostImage();
         postTime = postList.get(position).getPostTime();
         postLikes = postList.get(position).getPostLikes();
+        postComments = postList.get(position).getPostComments();
 
         // convert timestamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -104,6 +106,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.postTitle.setText(postTitle);
         myHolder.postDescription.setText(postDescription);
         myHolder.postLikes.setText(postLikes + " Likes");
+        myHolder.postComments.setText(postComments + " Comments");
 
         // set likes for each post
         setLikes(myHolder, postId);
@@ -186,7 +189,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "commentButton", Toast.LENGTH_SHORT).show();
+                // intent post detail activity
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                intent.putExtra("postId", postId); // will get detail of post using the id,its id of post clicked
+
+                context.startActivity(intent);
             }
         });
 
@@ -259,6 +266,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             popupMenu.getMenu().add(Menu.NONE, 1, 0, "Edit");
         }
 
+        popupMenu.getMenu().add(Menu.NONE, 2, 0, "View Detail");
+
         // item click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -275,6 +284,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                     intent.putExtra("editPostId", postId);
                     context.startActivity(intent);
 
+                } else if (id == 2) {
+                    // intent post detail activity
+                    Intent intent = new Intent(context, PostDetailActivity.class);
+                    intent.putExtra("postId", postId); // will get detail of post using the id,its id of post clicked
+                    context.startActivity(intent);
                 }
                 return false;
             }
@@ -381,7 +395,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         // views from row_post.xml
         ImageView postImage, profileImage;
         TextView userName;
-        TextView postTime, postTitle, postDescription, postLikes;
+        TextView postTime, postTitle, postDescription, postLikes,postComments;
         ImageButton moreButton;
         Button likeButton, commentButton, shareButton;
         LinearLayout profileLayout;
@@ -399,6 +413,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             postTitle = itemView.findViewById(R.id.postTitleTextView);
             postDescription = itemView.findViewById(R.id.postDescriptionTextView);
             postLikes = itemView.findViewById(R.id.postLikeTextView);
+            postComments = itemView.findViewById(R.id.postCommentsTextView);
 
             moreButton = itemView.findViewById(R.id.moreButton);
 

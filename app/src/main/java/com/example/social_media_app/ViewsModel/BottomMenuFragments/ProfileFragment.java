@@ -470,6 +470,44 @@ public class ProfileFragment extends Fragment {
                                 Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        // update name in current users comments son post
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    String child = ds.getKey();
+                                    assert child != null;
+                                    if (dataSnapshot.child(child).hasChild("Comments")){
+
+                                        String child1= "" + dataSnapshot.child(child).getKey();
+                                        Query child2 = FirebaseDatabase.getInstance().getReference("Posts").child(child1).child("Comments").orderByChild("uid").equalTo(uid);
+
+                                        child2.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                                                    String child = ds.getKey();
+                                                    dataSnapshot.getRef().child(child).child("userName").setValue(value);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 } else {
                     Toast.makeText(getActivity(), "Please enter " + keyName, Toast.LENGTH_SHORT).show();
@@ -683,6 +721,44 @@ public class ProfileFragment extends Fragment {
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                                    }
+                                });
+
+                                // update user image in current user comments on posts
+                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                            String child = ds.getKey();
+                                            assert child != null;
+                                            if (dataSnapshot.child(child).hasChild("Comments")){
+
+                                                String child1= "" + dataSnapshot.child(child).getKey();
+                                                Query child2 = FirebaseDatabase.getInstance().getReference("Posts").child(child1).child("Comments").orderByChild("uid").equalTo(uid);
+
+                                                child2.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot ds:dataSnapshot.getChildren()){
+                                                            String child = ds.getKey();
+                                                            dataSnapshot.getRef().child(child).child("userProfile").setValue(downloadURI.toString());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
