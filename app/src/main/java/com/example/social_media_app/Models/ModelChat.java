@@ -3,7 +3,7 @@ package com.example.social_media_app.Models;
 import android.util.Log;
 
 public class ModelChat {
-    String message, receiver, sender, timestamp;
+    private String message, receiver, sender, timestamp;
     boolean isSeen;
 
     public ModelChat() {

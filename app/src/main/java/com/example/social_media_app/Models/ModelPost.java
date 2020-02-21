@@ -2,7 +2,7 @@ package com.example.social_media_app.Models;
 
 public class ModelPost {
     // same name as uploading post
-    String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes, postComments;
+    private String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes, postComments;
 
     public ModelPost() {
 

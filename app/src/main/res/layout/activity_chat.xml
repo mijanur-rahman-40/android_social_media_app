@@ -67,17 +67,15 @@
 
         <!--  EditText: input message  -->
         <EditText
-            android:layout_margin="5dp"
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/message_edit_text_style"
             android:hint="Start Typing"
-
-            android:minLines="1"
-            android:maxLines="4"
             android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="4"
+            android:minLines="1"
             android:padding="10dp" />
         <!--  Button : send message -->
         <ImageButton

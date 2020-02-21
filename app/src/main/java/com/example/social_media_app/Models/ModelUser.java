@@ -3,13 +3,13 @@ package com.example.social_media_app.Models;
 public class ModelUser {
 
     //same name as firebase database
-    String name, email, search, phone, cover, image, uid;
+    private String name, email, search, phone, cover, image, uid, onlineStatus, typingTo;
 
     public ModelUser() {
 
     }
 
-    public ModelUser(String name, String email, String search, String phone, String cover, String image, String uid) {
+    public ModelUser(String name, String email, String search, String phone, String cover, String image, String uid, String onlineStatus, String typingTo) {
         this.name = name;
         this.email = email;
         this.search = search;
@@ -17,6 +17,8 @@ public class ModelUser {
         this.cover = cover;
         this.image = image;
         this.uid = uid;
+        this.onlineStatus = onlineStatus;
+        this.typingTo = typingTo;
     }
 
     public String getName() {
@@ -73,5 +75,21 @@ public class ModelUser {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getOnlineStatus() {
+        return onlineStatus;
+    }
+
+    public void setOnlineStatus(String onlineStatus) {
+        this.onlineStatus = onlineStatus;
+    }
+
+    public String getTypingTo() {
+        return typingTo;
+    }
+
+    public void setTypingTo(String typingTo) {
+        this.typingTo = typingTo;
     }
 }

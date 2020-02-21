@@ -2,7 +2,7 @@ package com.example.social_media_app.Models;
 
 public class ModelComment {
 
-    String commentId,comment,timestamp,uid,userEmail,userProfile,userName;
+    private String commentId,comment,timestamp,uid,userEmail,userProfile,userName;
 
     public ModelComment(){
 

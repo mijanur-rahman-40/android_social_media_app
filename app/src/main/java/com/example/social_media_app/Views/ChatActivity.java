@@ -323,13 +323,15 @@ public class ChatActivity extends AppCompatActivity {
         });*/
 
        // create chat list node/child in firebase database
-        DatabaseReference chatReference1 = FirebaseDatabase.getInstance().getReference("ChatList")
+        final DatabaseReference chatReference1 = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child(myUID)
                 .child(hisUID);
         chatReference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                  if (!dataSnapshot.exists()){
+                      chatReference1.child("id").setValue(hisUID);
+                  }
             }
 
             @Override
@@ -337,13 +339,13 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-        DatabaseReference chatReference2 = FirebaseDatabase.getInstance().getReference("ChatList")
+        final DatabaseReference chatReference2 = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child(hisUID)
                 .child(myUID);
         chatReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                chatReference2.child("id").setValue(myUID);
             }
 
             @Override
