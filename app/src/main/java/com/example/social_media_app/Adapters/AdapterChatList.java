@@ -35,7 +35,7 @@ public class AdapterChatList extends RecyclerView.Adapter<AdapterChatList.MyHold
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        // inflate layout row_chat list.xml
+        // inflate layout row_chat list.paths
         View view = LayoutInflater.from(context).inflate(R.layout.row_chatlist, viewGroup, false);
         return new MyHolder(view);
     }
@@ -95,7 +95,7 @@ public class AdapterChatList extends RecyclerView.Adapter<AdapterChatList.MyHold
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        // views of row_chat list.xml
+        // views of row_chat list.paths
         ImageView profileImage, onlineStatus;
         TextView nameText, lastMessage;
 

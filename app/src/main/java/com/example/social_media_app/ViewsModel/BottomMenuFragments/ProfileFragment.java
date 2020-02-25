@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
     // path where images of user profile and cover will be stored
     String storagePath = "Users_Profile_Cover_Images/";
 
-    // views from xml
+    // views from paths
     private ImageView avatarImageView, coverImageView;
     private TextView nameText, emailText, phoneText;
 

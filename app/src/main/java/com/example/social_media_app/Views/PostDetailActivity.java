@@ -3,11 +3,15 @@ package com.example.social_media_app.Views;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -41,6 +45,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -150,6 +156,76 @@ public class PostDetailActivity extends AppCompatActivity {
                 showMoreOptions();
             }
         });
+
+
+        // share button click handle
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String postTitle = postTitleView.getText().toString().trim();
+                String postDescription = postDescriptionView.getText().toString().trim();
+
+                // share post of text and image
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) postPictureImage.getDrawable();
+                if (bitmapDrawable == null) {
+                    // post without image
+                    shareTextOnly(postTitle, postDescription);
+                } else {
+                    // post with image
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    shareImageAndText(postTitle, postDescription, bitmap);
+                }
+            }
+        });
+    }
+
+    private void shareTextOnly(String postTitle, String postDescription) {
+
+        // concatenate title and description to share
+        String shareBody = postTitle + "\n" + postDescription;
+
+        // share intent
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here"); // in case you share via an email app
+        intent.putExtra(Intent.EXTRA_TEXT, shareBody); // text to share
+        startActivity(Intent.createChooser(intent, "Share Via")); // message to show in share dialog
+    }
+
+    private void shareImageAndText(String postTitle, String postDescription, Bitmap bitmap) {
+        // concatenate title and description to share
+        String shareBody = postTitle + "\n" + postDescription;
+
+        // first we will save this image in cache, get the saved image url
+        Uri uri = saveImageToShare(bitmap);
+
+        // share intent
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+        intent.setType("image/png");
+        startActivity(Intent.createChooser(intent, "Share Via"));
+    }
+
+    private Uri saveImageToShare(Bitmap bitmap) {
+        File imageFolder = new File(getCacheDir(), "images");
+        Uri uri = null;
+        try {
+            imageFolder.mkdirs(); // create if not exists
+            File file = new File(imageFolder, "shared_image.png");
+
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+            uri = FileProvider.getUriForFile(PostDetailActivity.this, "com.example.social_media_app.fileprovider", file);
+
+        } catch (Exception e) {
+            Toast.makeText(PostDetailActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return uri;
     }
 
     private void loadComments() {

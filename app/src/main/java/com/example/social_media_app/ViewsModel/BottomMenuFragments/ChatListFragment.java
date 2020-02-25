@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.social_media_app.Adapters.AdapterChatList;
 import com.example.social_media_app.Models.ModelChat;
@@ -139,16 +140,23 @@ public class ChatListFragment extends Fragment {
                         continue;
                     }
                     if (chat.getSender().equals(currentUser.getUid()) && chat.getSender().equals(uid) || chat.getReceiver().equals(uid) && chat.getSender().equals(currentUser.getUid())) {
-                        theLastMessage = chat.getMessage();
+                        // instead of displaying url in messaging show "sent photo"
+                        if (chat.getType().equals("image")) {
+                            theLastMessage = "Sent a photo";
+
+                        } else {
+                            theLastMessage = chat.getMessage();
+                        }
+
                     }
                 }
-                adapterChatList.setLastMessageMap(uid,theLastMessage);
+                adapterChatList.setLastMessageMap(uid, theLastMessage);
                 adapterChatList.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getActivity(), "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

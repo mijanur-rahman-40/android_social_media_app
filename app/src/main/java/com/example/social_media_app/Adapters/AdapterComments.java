@@ -43,7 +43,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        // bind the row_comments.xml layout
+        // bind the row_comments.paths layout
         View view = LayoutInflater.from(context).inflate(R.layout.row_comments, viewGroup, false);
         return new MyHolder(view);
     }
@@ -147,7 +147,7 @@ public class AdapterComments extends RecyclerView.Adapter<AdapterComments.MyHold
     // view holder class
     class MyHolder extends RecyclerView.ViewHolder {
 
-        // declare views from row_comments.xml
+        // declare views from row_comments.paths
         ImageView avatarImageView;
         TextView nameText, commentText, timeText;
 

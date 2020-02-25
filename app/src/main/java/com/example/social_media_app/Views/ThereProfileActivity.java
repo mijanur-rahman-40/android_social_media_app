@@ -39,7 +39,7 @@ public class ThereProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    // views from xml
+    // views from paths
     private ImageView avatarImageView, coverImageView;
     private TextView nameText, emailText, phoneText;
 

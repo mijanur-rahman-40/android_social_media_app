@@ -36,7 +36,7 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyUserHolder
     @Override
     public MyUserHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
-        // inflate layout(row_user.xml)
+        // inflate layout(row_user.paths)
         View view = LayoutInflater.from(context).inflate(R.layout.row_users, viewGroup, false);
 
         return new MyUserHolder(view);

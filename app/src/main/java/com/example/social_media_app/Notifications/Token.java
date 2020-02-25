@@ -5,8 +5,7 @@ public class Token {
      * An ID issued by the GCM Connection servers to the client app that allows
      * it to receive messages
      */
-
-    String token;
+    private String token;
 
     public Token() {
 

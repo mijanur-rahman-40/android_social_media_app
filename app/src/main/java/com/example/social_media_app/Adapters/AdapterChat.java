@@ -58,7 +58,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        // inflate layouts: row_chat_left.xml for receiver, row_chat_right.xml for sender
+        // inflate layouts: row_chat_left.paths for receiver, row_chat_right.paths for sender
         if (viewType == MESSAGE_TYPE_RIGHT) {
             View view = LayoutInflater.from(context).inflate(R.layout.row_chat_right, viewGroup, false);
             return new MyHolder(view);
@@ -72,7 +72,8 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder myHolder, final int position) {
         // get data
         String message = chatList.get(position).getMessage();
-        String timeStamp = chatList.get(position).getTimeStamp();
+        String timeStamp = chatList.get(position).getTimestamp();
+        String type = chatList.get(position).getType();
 
         // convert time stamp to dd/mm/yyyy hh:mm am/pm
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
@@ -85,8 +86,22 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
 
         // String timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
+        if (type.equals("text")){
+            // text message
+            myHolder.messageText.setVisibility(View.VISIBLE);
+            myHolder.messageImageView.setVisibility(View.GONE);
+
+            myHolder.messageText.setText(message);
+        }else {
+            // image message
+            myHolder.messageText.setVisibility(View.GONE);
+            myHolder.messageImageView.setVisibility(View.VISIBLE);
+
+            Picasso.get().load(message).placeholder(R.drawable.ic_image_message_black).into(myHolder.messageImageView);
+        }
+
         // set data
-        myHolder.messageText.setText(message);
+
         myHolder.timeText.setText(dateTime);
 
         try {
@@ -152,7 +167,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
          * Where both values matches delete that message
          */
 
-        String messageTimeStamp = chatList.get(position).getTimeStamp();
+        String messageTimeStamp = chatList.get(position).getTimestamp();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
         Query query = databaseReference.orderByChild("timestamp").equalTo(messageTimeStamp);
 
@@ -214,7 +229,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
     class MyHolder extends RecyclerView.ViewHolder {
 
         // views
-        ImageView profileImageView;
+        ImageView profileImageView,messageImageView;
         TextView messageText, timeText, isSeenText;
         LinearLayout messageLayout; // for clicking listener to show delete
 
@@ -224,6 +239,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
 
             // init views
             profileImageView = itemView.findViewById(R.id.profileImage);
+            messageImageView = itemView.findViewById(R.id.messageImageView);
             messageText = itemView.findViewById(R.id.messageText);
             timeText = itemView.findViewById(R.id.timeTextView);
             isSeenText = itemView.findViewById(R.id.isSeenTextView);

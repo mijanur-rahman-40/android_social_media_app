@@ -65,6 +65,13 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <!-- Image button : to send image-->
+        <ImageButton
+            android:id="@+id/attachButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_attach_black"
+            android:background="@null" />
         <!--  EditText: input message  -->
         <EditText
             android:id="@+id/messageEditText"

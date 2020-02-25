@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.social_media_app.Notifications.Token;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.HomeFragment;
 import com.example.social_media_app.ViewsModel.BottomMenuFragments.ProfileFragment;
 import com.example.social_media_app.R;
@@ -18,6 +19,9 @@ import com.example.social_media_app.ViewsModel.BottomMenuFragments.ChatListFragm
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -62,11 +66,11 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    /*public void updateToken(String token) {
+    public void updateToken(String token) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token myToken = new Token(token);
         databaseReference.child(myUID).setValue(myToken);
-    }*/
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -131,7 +135,7 @@ public class DashboardActivity extends AppCompatActivity {
             editor.apply();
 
             // update token
-            // updateToken(FirebaseInstanceId.getInstance().getToken());
+            updateToken(FirebaseInstanceId.getInstance().getToken());
 
         } else {
             // user not sign in, go to main activity
@@ -152,25 +156,4 @@ public class DashboardActivity extends AppCompatActivity {
         checkUserStatus();
         super.onStart();
     }
-
-   /* // inflate option menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // inflate menu_main
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    // handle menu item click
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // get item id
-        int id = item.getItemId();
-        if (id == R.id.actionLogout) {
-            firebaseAuth.signOut();
-            checkUserStatus();
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }

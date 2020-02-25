@@ -3,6 +3,9 @@ package com.example.social_media_app.Adapters;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.Gravity;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.social_media_app.Models.ModelPost;
@@ -40,6 +44,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -67,7 +73,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        // inflate layout row_posts.xml
+        // inflate layout row_posts.paths
         View view = LayoutInflater.from(context).inflate(R.layout.row_posts, viewGroup, false);
         return new MyHolder(view);
     }
@@ -76,7 +82,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     public void onBindViewHolder(@NonNull final MyHolder myHolder, final int position) {
 
         // get data
-        final String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes,postComments;
+        final String uid, userName, userEmail, userProfile, postId, postTitle, postDescription, postImage, postTime, postLikes, postComments;
 
         uid = postList.get(position).getUid();
         userName = postList.get(position).getUserName();
@@ -200,7 +206,16 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         myHolder.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "shareButton", Toast.LENGTH_SHORT).show();
+                // share post of text and image
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) myHolder.postImage.getDrawable();
+                if (bitmapDrawable == null) {
+                    // post without image
+                    shareTextOnly(postTitle, postDescription);
+                } else {
+                    // post with image
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    shareImageAndText(postTitle, postDescription, bitmap);
+                }
             }
         });
 
@@ -219,14 +234,63 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         });
     }
 
+    private void shareTextOnly(String postTitle, String postDescription) {
+
+        // concatenate title and description to share
+        String shareBody = postTitle + "\n" + postDescription;
+
+        // share intent
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here"); // in case you share via an email app
+        intent.putExtra(Intent.EXTRA_TEXT, shareBody); // text to share
+        context.startActivity(Intent.createChooser(intent, "Share Via")); // message to show in share dialog
+    }
+
+    private void shareImageAndText(String postTitle, String postDescription, Bitmap bitmap) {
+        // concatenate title and description to share
+        String shareBody = postTitle + "\n" + postDescription;
+
+        // first we will save this image in cache, get the saved image url
+        Uri uri = saveImageToShare(bitmap);
+
+        // share intent
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
+        intent.setType("image/png");
+        context.startActivity(Intent.createChooser(intent, "Share Via"));
+    }
+
+    private Uri saveImageToShare(Bitmap bitmap) {
+        File imageFolder = new File(context.getCacheDir(), "images");
+        Uri uri = null;
+        try {
+            imageFolder.mkdirs(); // create if not exists
+            File file = new File(imageFolder, "shared_image.png");
+
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+            uri = FileProvider.getUriForFile(context, "com.example.social_media_app.fileprovider", file);
+
+        } catch (Exception e) {
+            Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return uri;
+    }
+
+
+
     private void setLikes(final MyHolder myHolder, final String postKey) {
         likesReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(postKey).hasChild(myUid)) {
-
                     // user has liked this post
-
                     /*
                      * To indicate that the post is liked by this(SignedIn) user
                      * Change drawable left icon of like button
@@ -392,10 +456,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     // view holder class
     class MyHolder extends RecyclerView.ViewHolder {
 
-        // views from row_post.xml
+        // views from row_post.paths
         ImageView postImage, profileImage;
         TextView userName;
-        TextView postTime, postTitle, postDescription, postLikes,postComments;
+        TextView postTime, postTitle, postDescription, postLikes, postComments;
         ImageButton moreButton;
         Button likeButton, commentButton, shareButton;
         LinearLayout profileLayout;
