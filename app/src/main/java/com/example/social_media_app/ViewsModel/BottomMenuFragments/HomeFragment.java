@@ -27,6 +27,7 @@ import com.example.social_media_app.Models.ModelPost;
 import com.example.social_media_app.R;
 import com.example.social_media_app.Views.AddPostActivity;
 import com.example.social_media_app.Views.MainActivity;
+import com.example.social_media_app.Views.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -210,8 +211,11 @@ public class HomeFragment extends Fragment {
             firebaseAuth.signOut();
             checkUserStatus();
         }
-        if (id == R.id.actionAddPost) {
+        else if (id == R.id.actionAddPost) {
             startActivity(new Intent(getActivity(), AddPostActivity.class));
+        }else if (id == R.id.actionSettings) {
+            // go to settings activity
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

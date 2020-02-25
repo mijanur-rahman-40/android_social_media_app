@@ -25,6 +25,7 @@ import com.example.social_media_app.Adapters.AdapterUsers;
 import com.example.social_media_app.Models.ModelUser;
 import com.example.social_media_app.R;
 import com.example.social_media_app.Views.MainActivity;
+import com.example.social_media_app.Views.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -246,6 +247,9 @@ public class UsersFragment extends Fragment {
         if (id == R.id.actionLogout) {
             firebaseAuth.signOut();
             checkUserStatus();
+        } else if (id == R.id.actionSettings) {
+            // go to settings activity
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

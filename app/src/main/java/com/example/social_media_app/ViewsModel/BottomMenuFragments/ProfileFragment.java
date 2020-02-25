@@ -39,6 +39,7 @@ import com.example.social_media_app.Models.ModelPost;
 import com.example.social_media_app.R;
 import com.example.social_media_app.Views.AddPostActivity;
 import com.example.social_media_app.Views.MainActivity;
+import com.example.social_media_app.Views.SettingsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -610,7 +611,6 @@ public class ProfileFragment extends Fragment {
         /* This method will be called after picking image from Camera or Gallery*/
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_PICK_GALLERY_CODE) {
-
                 // image is picked from gallery,get uri of image
                 assert data != null;
                 imageUri = data.getData();
@@ -625,11 +625,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadFromFileCoverPhoto(final Uri imageUri) {
-
         // show progress
         progressDialog.show();
-
-
         /*
          * Instead of containing separate function for profile picture and cover photo
          * Here doing work for both in same function
@@ -741,17 +738,16 @@ public class ProfileFragment extends Fragment {
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         for (DataSnapshot ds:dataSnapshot.getChildren()){
                                                             String child = ds.getKey();
+                                                            assert child != null;
                                                             dataSnapshot.getRef().child(child).child("userProfile").setValue(downloadURI.toString());
                                                         }
                                                     }
 
                                                     @Override
                                                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                                        Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
-
-
                                             }
                                         }
                                     }
@@ -870,8 +866,11 @@ public class ProfileFragment extends Fragment {
             firebaseAuth.signOut();
             checkUserStatus();
         }
-        if (id == R.id.actionAddPost) {
+        else if (id == R.id.actionAddPost) {
             startActivity(new Intent(getActivity(), AddPostActivity.class));
+        }else if (id == R.id.actionSettings) {
+            // go to settings activity
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
