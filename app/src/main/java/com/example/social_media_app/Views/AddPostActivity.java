@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.social_media_app.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,9 +51,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.Objects;
+import java.util.Map;
+
 
 public class AddPostActivity extends AppCompatActivity {
 
@@ -502,6 +512,14 @@ public class AddPostActivity extends AppCompatActivity {
                                                 descriptionEditText.setText("");
                                                 postImageView.setImageURI(null);
                                                 imageUri = null;
+
+                                                // send notification
+                                                prepareNotification(
+                                                        "" + timeStamp, // since we are using timestamp for post id
+                                                        "" + name + " Added new post",
+                                                        "" + title + "\n" + description, "PostNotification",
+                                                        "POST"
+                                                );
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -524,7 +542,6 @@ public class AddPostActivity extends AppCompatActivity {
             });
         } else {
             // post without image
-
             HashMap<Object, String> hashMap = new HashMap<>();
 
             // put post information
@@ -555,6 +572,14 @@ public class AddPostActivity extends AppCompatActivity {
                             descriptionEditText.setText("");
                             postImageView.setImageURI(null);
                             imageUri = null;
+
+                            // send notification
+                            prepareNotification(
+                                    "" + timeStamp, // since we are using timestamp for post id
+                                    "" + name + " Added new post",
+                                    "" + title + "\n" + description, "PostNotification",
+                                    "POST"
+                            );
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -692,6 +717,63 @@ public class AddPostActivity extends AppCompatActivity {
                         }
                     });
         }*/
+    }
+
+    // call this method whenever publishing post
+    private void prepareNotification(String postId, String postTitle, String postDescription, String notificationType, String notificationTopic) {
+
+        // prepare data for notification
+        String NOTIFICATION_TOPIC = "/topics/" + notificationTopic; // topic must  match with what the receiver subscribe to
+        String NOTIFICATION_TITLE = postTitle;
+        String NOTIFICATION_MESSAGE = postDescription; // content of post
+        String NOTIFICATION_TYPE = notificationType; // now there are two notification types chat & post, so to differentiate FirebaseMessaging.java class
+
+        // prepare json what to send, and where to send
+        JSONObject notificationJsonObject = new JSONObject();
+        JSONObject notificationBodyJsonObject = new JSONObject();
+        try {
+            // what to send
+            notificationBodyJsonObject.put("notificationType", NOTIFICATION_TYPE);
+            notificationBodyJsonObject.put("sender", uid); // uid of current user/sender
+            notificationBodyJsonObject.put("postId", postId); // post id
+            notificationBodyJsonObject.put("postTitle", NOTIFICATION_TITLE);
+            notificationBodyJsonObject.put("postDescription", NOTIFICATION_MESSAGE);
+
+            // where to send
+            notificationJsonObject.put("to", NOTIFICATION_TOPIC);
+            notificationJsonObject.put("data", notificationBodyJsonObject); // combine data to be sent
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        sendPostNotification(notificationJsonObject);
+    }
+
+    private void sendPostNotification(JSONObject notificationJsonObject) {
+        // send volley object request
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", notificationJsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("FCM_RESPONSE", "onResponse: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error occurred
+                        Toast.makeText(AddPostActivity.this, "" + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                // put required headers
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "key=AAAAnVg_oaE:APA91bGcdBni2KbfpY1tZU7sNhfaMUl759d7e5EMrVTa6YOGho_Q05dxIJfjI5Up-TWls14ZprhZh2bKxIlWCZWU9PmzAZPL7FE1HdHNjxRd0rsp9uEU661Ah1hsx7_61-mI0QLEuxiA");
+                return headers;
+            }
+        };
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 
     private void showImagePickDialog() {
@@ -855,8 +937,6 @@ public class AddPostActivity extends AppCompatActivity {
                         // camera or gallery or both permission were denied
                         Toast.makeText(this, "Camera and Storage both permissions are necessary..", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-
                 }
             }
             break;
@@ -870,8 +950,6 @@ public class AddPostActivity extends AppCompatActivity {
                         // camera or gallery or both permission were denied
                         Toast.makeText(this, "Storage permissions  necessary..", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-
                 }
             }
             break;

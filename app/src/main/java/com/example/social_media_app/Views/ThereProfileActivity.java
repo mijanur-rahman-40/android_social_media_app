@@ -55,6 +55,7 @@ public class ThereProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_there_profile);
 
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle("Profile");
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -108,7 +109,7 @@ public class ThereProfileActivity extends AppCompatActivity {
                     // for cover photo
                     try {
                         // if image is received then set
-                        if (cover != null){
+                        if (cover != null) {
                             Picasso.get().load(cover).into(coverImageView);
                         }
 
@@ -154,6 +155,7 @@ public class ThereProfileActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost myPost = ds.getValue(ModelPost.class);
 
@@ -199,9 +201,11 @@ public class ThereProfileActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost hisPost = ds.getValue(ModelPost.class);
 
+                    assert hisPost != null;
                     if (hisPost.getPostTitle().toLowerCase().contains(searchQuery.toLowerCase()) || hisPost.getPostDescription().toLowerCase().contains(searchQuery.toLowerCase())) {
                         // add to list
                         postList.add(hisPost);
@@ -249,6 +253,7 @@ public class ThereProfileActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         menu.findItem(R.id.actionAddPost).setVisible(false); // hide add post from this activity
         MenuItem item = menu.findItem(R.id.actionSearch);
+        menu.findItem(R.id.actionSettings).setVisible(false);
         // search view of search user specific post
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
 

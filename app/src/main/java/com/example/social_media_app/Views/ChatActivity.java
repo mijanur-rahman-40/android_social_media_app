@@ -633,7 +633,13 @@ public class ChatActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Token token = ds.getValue(Token.class);
 
-                    Data data = new Data(myUID, name + ":" + message, "New Message", hisUID, R.drawable.ic_default_image);
+                    Data data = new Data(
+                            "" + myUID,
+                            "" + name + ":" + message,
+                            "New Message",
+                            "" + hisUID,
+                            "ChatNotification",
+                            R.drawable.ic_default_image);
 
                     assert token != null;
                     Sender sender = new Sender(data, token.getToken());
@@ -658,7 +664,7 @@ public class ChatActivity extends AppCompatActivity {
                                 // put params
                                 Map<String, String> headers = new HashMap<>();
                                 headers.put("Content-Type", "application/json");
-                                headers.put("Authorization", "keys=AAAAnVg_oaE:APA91bGcdBni2KbfpY1tZU7sNhfaMUl759d7e5EMrVTa6YOGho_Q05dxIJfjI5Up-TWls14ZprhZh2bKxIlWCZWU9PmzAZPL7FE1HdHNjxRd0rsp9uEU661Ah1hsx7_61-mI0QLEuxiA");
+                                headers.put("Authorization", "key=AAAAnVg_oaE:APA91bGcdBni2KbfpY1tZU7sNhfaMUl759d7e5EMrVTa6YOGho_Q05dxIJfjI5Up-TWls14ZprhZh2bKxIlWCZWU9PmzAZPL7FE1HdHNjxRd0rsp9uEU661Ah1hsx7_61-mI0QLEuxiA");
                                 return headers;
                             }
                         };
@@ -814,6 +820,7 @@ public class ChatActivity extends AppCompatActivity {
         // hide search view, add post, as we do not need here
         menu.findItem(R.id.actionSearch).setVisible(false);
         menu.findItem(R.id.actionAddPost).setVisible(false);
+        menu.findItem(R.id.actionSettings).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 

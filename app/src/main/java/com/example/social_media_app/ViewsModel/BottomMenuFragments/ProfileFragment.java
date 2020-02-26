@@ -108,9 +108,10 @@ public class ProfileFragment extends Fragment {
     private String[] cameraPermission;
     private String[] storagePermission;
 
-    List<ModelPost> postList;
-    AdapterPosts adapterPosts;
-    String uid;
+    private String uid;
+    private List<ModelPost> postList;
+    private AdapterPosts adapterPosts;
+
 
     // uri of picked image
     private Uri imageUri;
@@ -223,7 +224,7 @@ public class ProfileFragment extends Fragment {
 
     private void loadMyPosts() {
         // linear layout for recycler view
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
         // show newest post first, for this load from last
         linearLayoutManager.setStackFromEnd(true);
@@ -245,6 +246,7 @@ public class ProfileFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost myPost = ds.getValue(ModelPost.class);
 
@@ -268,7 +270,7 @@ public class ProfileFragment extends Fragment {
 
     private void searchMyPosts(final String searchQuery) {
         // linear layout for recycler view
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
         // show newest post first, for this load from last
         linearLayoutManager.setStackFromEnd(true);
@@ -290,9 +292,11 @@ public class ProfileFragment extends Fragment {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost myPost = ds.getValue(ModelPost.class);
 
+                    assert myPost != null;
                     if (myPost.getPostTitle().toLowerCase().contains(searchQuery.toLowerCase()) || myPost.getPostDescription().toLowerCase().contains(searchQuery.toLowerCase())) {
                         // add to list
                         postList.add(myPost);
@@ -800,12 +804,12 @@ public class ProfileFragment extends Fragment {
 
     private void checkUserStatus() {
         // get current user
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
+      // FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             // user is signed in stay here
             // set email of logged in user
             // emailText.setText(user.getEmail());
-            uid = user.getUid();
+            uid = firebaseUser.getUid();
         } else {
             // user not sign in, go to main activity
             startActivity(new Intent(getActivity(), MainActivity.class));
