@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/menu_nav"
+        app:labelVisibilityMode="labeled"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
         />

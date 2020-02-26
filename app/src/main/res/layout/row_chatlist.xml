@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="3dp"
     app:contentPadding="3dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
             android:id="@+id/userProfileImageView"

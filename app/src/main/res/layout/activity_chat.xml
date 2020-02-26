@@ -13,40 +13,55 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimaryDark"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!--      Receiver profile picture -->
-        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
-            android:id="@+id/profileImageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_default_profile"
-            app:c_background_color="@color/colorPrimaryDark" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:gravity="center"
-            android:orientation="vertical">
-            <!--   Receiver name -->
-            <TextView
-                android:id="@+id/userNameText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Has Name"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <!-- Receiver status i.e online or offline   -->
+            android:orientation="horizontal">
+            <!--      Receiver profile picture -->
+            <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_default_profile"
+                app:c_background_color="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/userStatusText"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="online"
-                android:textColor="#F7F2F2"
-                android:textStyle="bold" />
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+                <!--   Receiver name -->
+                <TextView
+                    android:id="@+id/userNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Name"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <!-- Receiver status i.e online or offline   -->
+
+                <TextView
+                    android:id="@+id/userStatusText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="online"
+                    android:textColor="#F7F2F2"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <!-- add icon to indicate block/unblock -->
+            <ImageView
+                android:layout_marginEnd="5dp"
+                android:id="@+id/blockImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_unblocked_green" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
     <!--    Recycler view-->
@@ -70,8 +85,8 @@
             android:id="@+id/attachButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_attach_black"
-            android:background="@null" />
+            android:background="@null"
+            android:src="@drawable/ic_attach_black" />
         <!--  EditText: input message  -->
         <EditText
             android:id="@+id/messageEditText"

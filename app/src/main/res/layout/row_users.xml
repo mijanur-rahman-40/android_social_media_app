@@ -5,45 +5,53 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:cardBackgroundColor="#fff"
-    app:contentPadding="3dp"
     app:cardCornerRadius="3dp"
     app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:contentPadding="3dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.blogspot.atifsoftwares.circularimageview.CircularImageView
             android:id="@+id/avatarImageView"
-            android:src="@drawable/ic_default_image"
             android:layout_width="70dp"
-            android:layout_height="70dp" />
+            android:layout_height="70dp"
+            android:src="@drawable/ic_default_image" />
+
         <LinearLayout
-            android:layout_margin="8dp"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="7dp">
 
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Person Name"
-                android:textSize="20sp"
                 android:textColor="#000"
-                />
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/emailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="Person Email"
-                android:textSize="16sp"
                 android:textColor="#272525"
-                />
-
+                android:textSize="16sp" />
         </LinearLayout>
+        <!-- add icon to indicate block/unblock -->
+        <ImageView
+            android:id="@+id/blockImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_unblocked_green" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

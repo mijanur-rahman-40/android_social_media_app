@@ -143,7 +143,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
 
-        RemoteMessage.Notification notification = remoteMessage.getNotification();
+//        RemoteMessage.Notification notification = remoteMessage.getNotification();
 
         assert user != null;
         int i = Integer.parseInt(user.replaceAll("[\\D]", ""));

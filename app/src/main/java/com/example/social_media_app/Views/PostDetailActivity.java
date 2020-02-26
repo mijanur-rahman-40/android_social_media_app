@@ -558,7 +558,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(PostDetailActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -582,7 +582,6 @@ public class PostDetailActivity extends AppCompatActivity {
                     postImage = "" + ds.child("postImage").getValue();
                     hisProfile = "" + ds.child("userProfile").getValue();
                     hisUid = "" + ds.child("uid").getValue();
-                    String userEmail = "" + ds.child("userEmail").getValue();
                     hisName = "" + ds.child("userName").getValue();
                     String commentCount = "" + ds.child("postComments").getValue();
 
@@ -627,7 +626,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(PostDetailActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

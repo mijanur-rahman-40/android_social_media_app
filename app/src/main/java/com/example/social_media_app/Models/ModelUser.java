@@ -4,12 +4,13 @@ public class ModelUser {
 
     //same name as firebase database
     private String name, email, search, phone, cover, image, uid, onlineStatus, typingTo;
+    private boolean isBlocked = false;
 
     public ModelUser() {
 
     }
 
-    public ModelUser(String name, String email, String search, String phone, String cover, String image, String uid, String onlineStatus, String typingTo) {
+    public ModelUser(String name, String email, String search, String phone, String cover, String image, String uid, String onlineStatus, String typingTo, boolean isBlocked) {
         this.name = name;
         this.email = email;
         this.search = search;
@@ -19,6 +20,7 @@ public class ModelUser {
         this.uid = uid;
         this.onlineStatus = onlineStatus;
         this.typingTo = typingTo;
+        this.isBlocked = isBlocked;
     }
 
     public String getName() {
@@ -91,5 +93,13 @@ public class ModelUser {
 
     public void setTypingTo(String typingTo) {
         this.typingTo = typingTo;
+    }
+
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }

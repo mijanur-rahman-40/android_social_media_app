@@ -50,11 +50,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
+;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,6 +126,20 @@ public class AddPostActivity extends AppCompatActivity {
 
         // get data through intent from previous activities adapter
         Intent intent = getIntent();
+
+        //get data and it's type from intent
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if ("text/plain".equals(type)) {
+                // text type data
+                handleSendText(intent);
+            } else if (type.startsWith("image")) {
+                // image type data
+                handleSendImage(intent);
+            }
+        }
+
         final String isUpdateKey = "" + intent.getStringExtra("key");
         final String editPostId = "" + intent.getStringExtra("editPostId");
 
@@ -194,15 +208,34 @@ public class AddPostActivity extends AppCompatActivity {
                 } else {
                     uploadData(title, description);
                 }
-//                if (imageUri == null) {
-//                    // post without image
-//                    uploadData(title, description, "noImage");
-//                } else {
-//                    // post with image
-//                    uploadData(title, description, String.valueOf(imageUri));
-//                }
+                /*if (imageUri == null) {
+                    // post without image
+                    uploadData(title, description, "noImage");
+                } else {
+                    // post with image
+                    uploadData(title, description, String.valueOf(imageUri));
+                }*/
             }
         });
+    }
+
+    private void handleSendImage(Intent intent) {
+        // handle the received image(url)
+        Uri imageURI = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        if (imageURI != null) {
+            imageUri = imageURI;
+            // set to imageView
+            postImageView.setImageURI(imageUri);
+        }
+    }
+
+    private void handleSendText(Intent intent) {
+        // handle te received text
+        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (sharedText != null) {
+            // set to description edit text
+            descriptionEditText.setText(sharedText);
+        }
     }
 
     private void beginUpdate(String title, String description, String editPostId) {
@@ -277,7 +310,6 @@ public class AddPostActivity extends AppCompatActivity {
                         while (!uriTask.isSuccessful()) ;
 
                         String downloadUri = uriTask.getResult().toString();
-
                         if (uriTask.isSuccessful()) {
                             // uri is received upload post to firebase database
                             HashMap<String, Object> hashMap = new HashMap<>();
@@ -307,7 +339,6 @@ public class AddPostActivity extends AppCompatActivity {
                                             progressDialog.dismiss();
                                         }
                                     });
-
                         }
 
                     }
@@ -321,7 +352,6 @@ public class AddPostActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
     private void updateWasWithImage(final String title, final String description, final String editPostId) {
         // post is with image, delete previous image first
