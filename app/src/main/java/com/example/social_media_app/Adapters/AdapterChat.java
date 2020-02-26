@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.social_media_app.Configuration.Date;
 import com.example.social_media_app.Models.ModelChat;
 import com.example.social_media_app.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,6 +85,11 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
         //calendar.setTimeInMillis(Long.valueOf(timeStamp));
         String dateTime = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 
+        String[] splitTime = dateTime.split("/", 3);
+        Date date = new Date(Integer.parseInt(splitTime[1]));
+        String[] split = splitTime[2].split(" ", 2);
+        String originalTimeDate = splitTime[0] + " " + date.getMonthName() + " | " + split[1];
+
         // String timeStamp = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
         if (type.equals("text")){
@@ -102,7 +108,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder> {
 
         // set data
 
-        myHolder.timeText.setText(dateTime);
+        myHolder.timeText.setText(originalTimeDate);
 
         try {
             Picasso.get().load(imageUrl).into(myHolder.profileImageView);

@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.social_media_app.Configuration.Date;
 import com.example.social_media_app.Models.ModelPost;
 import com.example.social_media_app.R;
 import com.example.social_media_app.Views.AddPostActivity;
@@ -103,12 +104,17 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         }
         String time = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 
+        String[] splitTime = time.split("/", 3);
+        Date date = new Date(Integer.parseInt(splitTime[1]));
+        String[] split = splitTime[2].split(" ", 2);
+        String originalTime = splitTime[0] + " " + date.getMonthName() + " | " + split[1];
+
         // set data
         if (userName != null) {
             myHolder.userName.setText(userName);
         }
 
-        myHolder.postTime.setText(time);
+        myHolder.postTime.setText(originalTime);
         myHolder.postTitle.setText(postTitle);
         myHolder.postDescription.setText(postDescription);
         myHolder.postLikes.setText(postLikes + " Likes");
@@ -454,7 +460,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     }
 
     // view holder class
-    class MyHolder extends RecyclerView.ViewHolder {
+    static class MyHolder extends RecyclerView.ViewHolder {
 
         // views from row_post.paths
         ImageView postImage, profileImage;
@@ -465,7 +471,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         LinearLayout profileLayout;
 
 
-        public MyHolder(@NonNull View itemView) {
+        MyHolder(@NonNull View itemView) {
             super(itemView);
 
             // init views

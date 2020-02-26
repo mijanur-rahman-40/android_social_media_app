@@ -47,7 +47,8 @@
                     android:id="@+id/postTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="33 min" />
+                    android:text="33 min"
+                    android:textColor="#272525"/>
             </LinearLayout>
 
             <ImageButton
@@ -64,7 +65,8 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:text="Title"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textColor="#201E1E"
             android:textStyle="bold" />
 
         <TextView
@@ -73,8 +75,9 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:text="The description of the post"
-            android:textColor="#000"
-            android:textStyle="bold" />
+            android:textColor="#191818"
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
         <ImageView
             android:scaleType="fitXY"
@@ -125,7 +128,6 @@
                 android:layout_weight="1"
                 android:background="#fff"
                 android:drawableStart="@drawable/ic_like_up_black"
-
                 android:text="LIKE" />
 
             <Button

@@ -44,6 +44,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.social_media_app.Adapters.AdapterChat;
 import com.example.social_media_app.Adapters.AdapterUsers;
+import com.example.social_media_app.Configuration.Date;
 import com.example.social_media_app.Models.ModelChat;
 import com.example.social_media_app.Models.ModelUser;
 import com.example.social_media_app.Notifications.Data;
@@ -195,7 +196,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     // check typing status
                     if (typingStatus.equals(myUID)) {
-                        String typing = "typing...";
+                        String typing = "writing...";
                         statusText.setText(typing);
                     } else {
                         // get value of online status
@@ -209,8 +210,14 @@ public class ChatActivity extends AppCompatActivity {
                             if (!TextUtils.isEmpty(onlineStatus)) {
                                 calendar.setTimeInMillis(Long.parseLong(onlineStatus));
                             }
+
                             String onlineStatusTime = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
-                            String temp = "Last seen at : " + onlineStatusTime;
+                            String[] splitTime = onlineStatusTime.split("/", 3);
+                            Date date = new Date(Integer.parseInt(splitTime[1]));
+                            String[] split = splitTime[2].split(" ", 2);
+                            String temp = "Last seen at : " + splitTime[0] + " " + date.getMonthName() + " | " + split[1];
+
+                            // String temp = "Last seen at : " + onlineStatusTime;
                             statusText.setText(temp);
                         }
                     }
@@ -231,7 +238,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(ChatActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -292,7 +299,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isBlocked) {
                     unBlockedUser();
-                }else {
+                } else {
                     blockedUser();
                 }
             }
@@ -316,15 +323,15 @@ public class ChatActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             if (ds.exists()) {
-                               blockImage.setImageResource(R.drawable.ic_blocked_red);
-                               isBlocked = true;
+                                blockImage.setImageResource(R.drawable.ic_blocked_red);
+                                isBlocked = true;
                             }
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(ChatActivity.this, ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -386,7 +393,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(ChatActivity.this, ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "" + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -734,21 +741,20 @@ public class ChatActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Token token = ds.getValue(Token.class);
 
                     Data data = new Data(
                             "" + myUID,
-                            "" + name + ":" + message,
+                            "" + name + "\n" + message,
                             "New Message",
                             "" + hisUID,
                             "ChatNotification",
-                            R.drawable.ic_default_image);
+                            R.drawable.ic_action_default_image);
 
                     assert token != null;
                     Sender sender = new Sender(data, token.getToken());
-                    // fsm json object request
+                    // fcm json object request
                     try {
                         JSONObject senderJsonObject = new JSONObject(new Gson().toJson(sender));
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://fcm.googleapis.com/fcm/send", senderJsonObject,
@@ -791,7 +797,6 @@ public class ChatActivity extends AppCompatActivity {
         // get current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-
             // user is signed in stay here
             // set email of logged in user
             // emailText.setText(user.getEmail());

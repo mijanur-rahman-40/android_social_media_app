@@ -117,7 +117,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
 
         // show notification
         assert notificationManager != null;
-        notificationManager.notify(notificationID,notificationBuilder.build());
+        notificationManager.notify(notificationID, notificationBuilder.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -143,7 +143,7 @@ public class FirebaseMessaging extends FirebaseMessagingService {
         String title = remoteMessage.getData().get("title");
         String body = remoteMessage.getData().get("body");
 
-//        RemoteMessage.Notification notification = remoteMessage.getNotification();
+        // RemoteMessage.Notification notification = remoteMessage.getNotification();
 
         assert user != null;
         int i = Integer.parseInt(user.replaceAll("[\\D]", ""));
