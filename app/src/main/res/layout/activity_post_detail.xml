@@ -80,6 +80,7 @@
                         android:layout_height="wrap_content"
                         android:autoLink="all"
                         android:text="Title"
+                        android:textColor="#201E1E"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -89,8 +90,9 @@
                         android:layout_height="wrap_content"
                         android:autoLink="all"
                         android:text="The description of the post"
-                        android:textColor="#000"
-                        android:textStyle="bold" />
+                        android:textColor="#191818"
+                        android:textSize="16sp"
+                        android:textStyle="normal"  />
 
                     <ImageView
                         android:id="@+id/postImageShowView"
